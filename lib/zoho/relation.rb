@@ -57,7 +57,7 @@ module Zoho
         return load_all_unpaginated
       end
 
-      data = connection.get(path, index: 0, range: 2)
+      data = connection.get(path, index: 500, range: 2)
       pp data
       raise
     end

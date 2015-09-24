@@ -57,9 +57,19 @@ module Zoho
         return load_all_unpaginated
       end
 
-      data = connection.get(path, index: 500, range: 2)
-      pp data
-      raise
+      data = connection.get(path, index: loaded_pages.length * result_range + 1, range: result_range)
+      if data.nil?
+        last_page_loaded!
+        return nil
+      end
+
+      page = data[klass.collection_path]
+      loaded_pages << page
+      if page.length < result_range
+        last_page_loaded!
+      end
+
+      page
     end
 
     def each_pages
@@ -68,7 +78,8 @@ module Zoho
       end
 
       while not last_page_loaded? do
-        yield load_next_page
+        next_page = load_next_page
+        yield next_page unless next_page.nil?
       end
     end
 
@@ -85,7 +96,7 @@ module Zoho
     end
 
     def result_range
-      50
+      10
     end
   end
 end

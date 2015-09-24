@@ -58,11 +58,15 @@ module Zoho
         @@parents = Array(parents).map(&:to_sym)
       end
 
-      def update_data(data)
-        p data
-        data.each do |key, value|
-          next unless self.class.properties.include? key.to_sym
+      def data
+        @data ||= {}
+      end
 
+      def update_data(input)
+        input.each do |key, value|
+          data[key] = value
+
+          next unless self.class.properties.include? key.to_sym
           send("#{key}=".to_sym, value)
         end
       end

@@ -5,8 +5,11 @@ module Zoho
   module Data
     class Base
       attr_reader :connection
-      def initialize(connection)
+      attr_reader :parents
+
+      def initialize(connection, parents = {})
         @connection = connection
+        @parents = parents
       end
 
       def self.relation_from_connection(connection, parents = {})
@@ -22,22 +25,31 @@ module Zoho
         @paginated = false
       end
 
+      def self.has_member_path?
+        @has_member_path = true if @has_member_path.nil?
+        @has_member_path
+      end
+
+      def self.disable_member_path
+        @has_member_path = false
+      end
+
       def self.collection_path
         self.name.demodulize.underscore.pluralize
       end
 
       def self.member_path
-        self.collection_name
+        self.collection_path
       end
 
-      def self.from_data(connection, data)
-        inst = self.new(connection)
+      def self.from_data(connection, parents, data)
+        inst = self.new(connection, parents)
         inst.update_data(data)
         inst
       end
 
       def self.properties
-        @@properties ||= []
+        @properties ||= []
       end
 
       def self.property(*props)

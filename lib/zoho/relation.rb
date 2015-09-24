@@ -20,9 +20,23 @@ module Zoho
     def each
       each_pages do |page|
         page.each do |record|
-          yield klass.from_data(connection, record)
+          yield klass.from_data(connection, parents, record)
         end
       end
+    end
+
+    def find_by_id(id)
+      unless has_member_path?
+        return find do |obj|
+          id == obj.id
+        end
+      end
+
+      data = connection.get(member_path(id))
+      return nil if data.nil?
+
+      record = data[klass.collection_path].first
+      return klass.from_data(connection, parents, record)
     end
 
     protected
@@ -38,7 +52,7 @@ module Zoho
       @last_page_loaded = true
     end
 
-    def path
+    def parents_path_components
       r = []
 
       klass.get_parents.each do |parent|
@@ -47,8 +61,19 @@ module Zoho
         r << parents[parent]
       end
 
-      r << klass.collection_path
+      r
+    end
 
+    def collection_path
+      r = parents_path_components
+      r << klass.collection_path
+      "#{r.join('/')}/"
+    end
+
+    def member_path(id)
+      r = parents_path_components
+      r << klass.member_path
+      r << id.to_s
       "#{r.join('/')}/"
     end
 
@@ -57,7 +82,7 @@ module Zoho
         return load_all_unpaginated
       end
 
-      data = connection.get(path, index: loaded_pages.length * result_range + 1, range: result_range)
+      data = connection.get(collection_path, index: loaded_pages.length * result_range + 1, range: result_range)
       if data.nil?
         last_page_loaded!
         return nil
@@ -84,7 +109,7 @@ module Zoho
     end
 
     def load_all_unpaginated
-      data = connection.get(path)
+      data = connection.get(collection_path)
       page = data[klass.collection_path]
       loaded_pages << page
       last_page_loaded!
@@ -93,6 +118,10 @@ module Zoho
 
     def paginated?
       klass.paginated?
+    end
+
+    def has_member_path?
+      klass.has_member_path?
     end
 
     def result_range

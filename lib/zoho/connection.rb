@@ -23,9 +23,10 @@ module Zoho
       uri.query = query.merge({authtoken: token}).to_query
 
       response = Net::HTTP.get_response(uri)
-      raise unless response.kind_of? Net::HTTPSuccess
-
+      return nil if response.kind_of? Net::HTTPNotFound 
       return nil if response.kind_of? Net::HTTPNoContent
+
+      raise unless response.kind_of? Net::HTTPSuccess
 
       JSON.parse(response.body)
     end

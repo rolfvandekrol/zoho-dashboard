@@ -67,11 +67,11 @@ module Zoho
       end
 
       def self.get_parents
-        @@parents ||= []
+        @parents ||= []
       end
 
       def self.parents(*parents)
-        @@parents = Array(parents).map(&:to_sym)
+        @parents = Array(parents).map(&:to_sym)
       end
 
       def data

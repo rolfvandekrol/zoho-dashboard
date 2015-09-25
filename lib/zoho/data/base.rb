@@ -42,8 +42,12 @@ module Zoho
         self.collection_path
       end
 
+      def self.class_from_data(data)
+        self
+      end
+
       def self.from_data(connection, parents, data)
-        inst = self.new(connection, parents)
+        inst = class_from_data(data).new(connection, parents)
         inst.update_data(data)
         inst
       end

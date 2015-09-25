@@ -125,7 +125,7 @@ module Zoho
     end
 
     def result_range
-      10
+      50
     end
   end
 end

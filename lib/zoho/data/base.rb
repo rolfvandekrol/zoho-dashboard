@@ -94,6 +94,17 @@ module Zoho
         @parents = Array(parents).map(&:to_sym)
       end
 
+      def self.child(*children)
+        children.each do |ch|
+          klass = Zoho::Data.const_get(ch.to_s.camelize.to_sym)
+          parents_key = self.name.demodulize.underscore.to_sym
+
+          define_method(ch.to_s.pluralize.to_sym) do
+            klass.relation_from_connection(connection, parents.merge({parents_key => id}))
+          end
+        end
+      end
+
       # Relation
       def self.relation_from_connection(connection, parents = {})
         Zoho::Relation.new(connection, self, parents)

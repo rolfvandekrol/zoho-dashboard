@@ -5,6 +5,7 @@ module Zoho
       disable_pagination
       disable_member_path
       property :settings, :name
+      child :project
 
       def self.member_path
         'portal'
@@ -12,10 +13,6 @@ module Zoho
 
       def company_name
         settings['company_name']
-      end
-
-      def projects
-        Zoho::Data::Project.relation_from_connection(connection, {portal: id})
       end
     end
   end

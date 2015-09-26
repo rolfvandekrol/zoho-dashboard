@@ -4,7 +4,7 @@ module Zoho
     class Portal < Base
       disable_pagination
       disable_member_path
-      property :id, :settings, :name
+      property :settings, :name
 
       def self.member_path
         'portal'

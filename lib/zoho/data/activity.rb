@@ -6,6 +6,7 @@ module Zoho
   module Data
     class Activity < Base
       parents :portal, :project
+      property :activity_for
 
       def self.class_from_data(data)
         klass_names = data['activity_for'].downcase.split(/[^a-z]+/).reduce([[]]) do |memo, obj|

@@ -4,6 +4,7 @@ module Zoho
     class Bug < Base
       parents :portal, :project
       property :title, :closed
+      time_property :created_time
       child :log
 
       def closed?

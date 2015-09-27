@@ -6,7 +6,8 @@ module Zoho
   module Data
     class Activity < Base
       parents :portal, :project
-      property :activity_for
+      property :activity_for, :action_id
+      time_property :time
 
       def self.class_from_data(data)
         klass_names = data['activity_for'].downcase.split(/[^a-z]+/).reduce([[]]) do |memo, obj|
@@ -21,7 +22,9 @@ module Zoho
       end
 
       class Bug < self
-        
+      end
+
+      class BugStatus < Bug
       end
     end
   end

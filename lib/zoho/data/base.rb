@@ -66,7 +66,6 @@ module Zoho
 
         [] + own_properties
       end
-
       def self.own_properties
         @properties ||= []
       end
@@ -77,6 +76,18 @@ module Zoho
           self.own_properties << prop.to_sym unless self.properties.include? prop.to_sym
 
           attr_accessor prop.to_sym
+        end
+      end
+      def self.time_property(*props)
+        props = Array(props)
+        props.each do |prop|
+          prop_name = "#{prop}_long".to_sym
+          property prop_name
+
+          define_method prop.to_sym do
+            t = send(prop_name)
+            DateTime.strptime("#{t}",'%Q')
+          end
         end
       end
 

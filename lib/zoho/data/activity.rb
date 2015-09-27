@@ -15,6 +15,8 @@ module Zoho
         klass_names.each do |klass_name|
           return self.const_get(klass_name) if self.const_defined?(klass_name)
         end
+
+        self
       end
 
       class Bug < self

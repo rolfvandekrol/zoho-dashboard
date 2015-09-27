@@ -5,7 +5,7 @@ module Zoho
       disable_pagination
       disable_member_path
       property :settings, :name
-      child :project
+      child :project, :user
 
       def self.member_path
         'portal'

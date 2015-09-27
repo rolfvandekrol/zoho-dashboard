@@ -7,5 +7,6 @@ module Zoho
     autoload :Activity,   'zoho/data/activity'
     autoload :Bug,        'zoho/data/bug'
     autoload :Log,        'zoho/data/log'
+    autoload :User,       'zoho/data/user'
   end
 end

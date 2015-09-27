@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Zoho Dashboard</title>
+  <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+
+<div class="container">
+  <div class="graph">
+    <canvas id="graph-canvas"></canvas>
+  </div>
+  <div class="sidebar">
+    <div class="dataset">
+      <p>State at the end of the week</p>
+      <ul>
+        <li class="active" data-dataset="state_open">Open</li>
+        <li data-dataset="state_closed">Closed</li>
+      </ul>
+      <p>Action during the week</p>
+      <ul>
+        <li data-dataset="opened">Opened</li>
+        <li data-dataset="closed">Closed</li>
+      </ul>
+    </div>
+    <div class="types">
+      <ul>
+        <li data-type="bug" class="active">Bugs</li>
+        <li data-type="feature_request" class="active">Feature Requests</li>
+        <li data-type="task" class="active">Tasks</li>
+      </ul>
+    </div>
+    <div class="selection">
+      <ul>
+        <li class="select-all">Select all projects</li>
+        <li class="select-none">Select no projects</li>
+      </ul>
+    </div>
+    <div class="projects-list">
+      <ul>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

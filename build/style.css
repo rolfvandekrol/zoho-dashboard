@@ -1,0 +1,82 @@
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  height: 100%;
+  width: 100%;
+}
+
+html {
+  box-sizing: border-box;
+}
+html * {
+  box-sizing: inherit;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.graph {
+  width: 75%;
+  height: 100%;
+  padding: 40px;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.sidebar {
+  width: 25%;
+  height: 100%;
+  background: #5D6D7E;
+  padding: 0;
+  overflow-y: scroll;
+}
+
+.sidebar > * {
+  padding: 5px 10px;
+}
+.selection, .dataset {
+  background: #0d253d;
+}
+
+p {
+  color: #ebebeb;
+  margin: 0 0 5px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: inline-block;
+  padding: 5px 10px 5px 10px;
+  background: #ebebeb;
+  margin: 10px 10px 10px 0;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.projects-list li, .types li, .dataset li {
+  padding: 10px 10px 10px 5px;
+  border-left: 5px solid #ebebeb;
+}
+
+.projects-list li.active, .types li.active, .dataset li.active {
+  border-left-color: #300909;
+}

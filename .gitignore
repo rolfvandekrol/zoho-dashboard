@@ -2,3 +2,6 @@
 .gems
 .ruby-version
 .rbenv-gemsets
+
+config.yml
+build/projects.json

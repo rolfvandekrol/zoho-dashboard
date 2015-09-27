@@ -28,7 +28,7 @@ module Zoho
     def find_by_id(id)
       unless has_member_path?
         return find do |obj|
-          id == obj.id
+          id.to_s == obj.id.to_s
         end
       end
 

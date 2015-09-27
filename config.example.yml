@@ -1,0 +1,12 @@
+
+# Auth token
+token: ''
+
+# Portal ID
+portal_id: ''
+
+# Group ID
+group_id: ''
+
+# Load ten weeks of history
+weeks: 10

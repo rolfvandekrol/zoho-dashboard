@@ -27,6 +27,10 @@ module Dashboard
 
       pb.finish
 
+      result.sort_by! do |project|
+        project.name.downcase
+      end
+
       filename = File.join(File.dirname(__FILE__), '../../build/projects.json')
       File.write(filename, result.to_json)
 

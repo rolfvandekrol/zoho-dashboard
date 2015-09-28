@@ -21,8 +21,9 @@ module Zoho
       uri = URI.parse(BASE_URL)
       uri.merge! path
       uri.query = query.merge({authtoken: token}).to_query
+      request = Net::HTTP::Get.new(uri.request_uri)
 
-      response = Net::HTTP.get_response(uri)
+      response = http.request(request)
       return nil if response.kind_of? Net::HTTPNotFound 
       return nil if response.kind_of? Net::HTTPNoContent
 
@@ -32,6 +33,15 @@ module Zoho
     end
 
     protected
+
+    def http
+      @http ||= begin
+        base_uri = URI.parse(BASE_URL)
+        http = Net::HTTP.new(base_uri.host, base_uri.port)
+        http.use_ssl = true
+        http
+      end
+    end
 
     def token
       @options[:token]

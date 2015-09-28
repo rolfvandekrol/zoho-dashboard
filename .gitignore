@@ -5,3 +5,8 @@
 
 config.yml
 build/projects.json
+
+.bundle
+vender
+
+site-meta.json

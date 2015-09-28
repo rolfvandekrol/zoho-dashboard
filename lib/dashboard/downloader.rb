@@ -33,12 +33,6 @@ module Dashboard
 
       filename = File.join(File.dirname(__FILE__), '../../build/projects.json')
       File.write(filename, result.to_json)
-
-
-      # pp analyse_project(connection.portals.first.projects.find_by_id(411028000000208148))
-
-      # .activities.first(20) # .bugs.find_by_id(411028000006270131)
-      # p Hash[connection.portals.to_a.map{|portal| [portal.id, [portal.name, portal.company_name]] }]
     end
 
     def analyse_project(project)

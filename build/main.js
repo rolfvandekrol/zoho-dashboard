@@ -68,12 +68,12 @@ $.ajax('projects.json', {
         labels: get_labels(),
         datasets: [
           {
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
+            fillColor: "rgba(77,188,233,0.2)",
+            strokeColor: "rgba(77,188,233,1)",
+            pointColor: "rgba(38,173,228,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
+            pointHighlightStroke: "rgba(38,173,228,1)",
             data: get_data()
           },
         ]

@@ -7,6 +7,6 @@ config.yml
 build/projects.json
 
 .bundle
-vender
+vendor
 
 site-meta.json

@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+$: << File.join(File.dirname(__FILE__), '../lib')
+require 'zoho'
+require 'dashboard'
+require 'yaml'
+require 'pp'
+
+require 'active_support/core_ext/hash/keys'
+config = YAML.load(File.read(File.join(File.dirname(__FILE__), '../config.yml'))).symbolize_keys
+
+pp Hash[Zoho.connect(config).portals.map{|portal| [portal.id, portal.name]}]

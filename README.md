@@ -24,10 +24,30 @@ The project can roughly be divided in three parts.
 * A HTML, CSS and JavaScript frontend that provides an interface to show the
   data in the JSON file as a fancy graph. This part lives in `build`.
 
+## Assumptions
+
+The script is quite heavily targeted at our usage of Zoho Projects. A few
+notable things that are hardcoded in this script:
+
+* We use the `module` property of a bug to indicate whether it is a Bug, 
+  Feature Request or Task.
+* All the projects that we want to monitor are in a single portal and are
+  placed in a group in this portal.
+
 ## Installation
 
-To get this project running, make a clone of the git repository. Then copy the
-`config.example.yml` to `config.yml` and fill this with your configuration.
+To get this project running, make a clone of the git repository. 
+
+Run
+
+```bash
+bundle install
+```
+
+to make sure all the dependencies are installed. 
+
+Then copy the `config.example.yml` to `config.yml` and fill this with your 
+configuration.
 
 * `token` is the Zoho Projects API Auth Token. This token can be retrieved from
   Zoho Projects by logging in to the normal user interface of Zoho Projects and
@@ -44,4 +64,24 @@ To get this project running, make a clone of the git repository. Then copy the
   belong to. This ID can be retrieved by running `bin/groups` when the `token`
   and the `portal_id` are filled. It will show a list of all the groups in the
   application (or rather all the groups that actually contain projects).
-* `weeks` is how many of weeks of history will be retrieved by the script.
+* `weeks` is how many of weeks of history will be retrieved by the script. Read
+  the part about how the data is gathered in this file to find out more about
+  this.
+
+Now that you've configured the script, you'll need to run it. Run
+
+```bash
+./bin/download
+```
+
+to retrieve the data from Zoho Projects and save the `build/projects.json` file.
+This can take quite a while. We download ten weeks of data for a little over a
+hundred projects, in about 10 to 15 minutes. The script sends a lot of requests
+to the Zoho Projects API, and the API is not very fast.
+
+The last step is to get a webserver running that uses `build` as the document
+root. Directly opening `build/index.html` in your browser does not work, because
+the JavaScript code loads the JSON file using AJAX, which doesn't work without
+HTTP.
+
+

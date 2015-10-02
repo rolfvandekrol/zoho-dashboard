@@ -1,6 +1,6 @@
 # Zoho Projects Dashboard
 
-Zoho Projects is a projects management tool that 
+Zoho Projects is a project management tool that 
 [Hoppinger](http://www.hoppinger.com) uses as a bug tracker for the Service &
 Support department. The Service & Support department is responsible for the
 maintainance of Hopppinger's projects. The Service & Support department needs a
@@ -33,6 +33,7 @@ notable things that are hardcoded in this script:
   Feature Request or Task.
 * All the projects that we want to monitor are in a single portal and are
   placed in a group in this portal.
+* We monitor per week.
 
 ## Installation
 
@@ -84,4 +85,27 @@ root. Directly opening `build/index.html` in your browser does not work, because
 the JavaScript code loads the JSON file using AJAX, which doesn't work without
 HTTP.
 
+## Data retrieval
+
+The script gathers all the projects from Zoho Projects. Then it filters out the
+projects in the group. For every project we run the following analyzing
+procedure.
+
+We download a list of all bugs for the project. We map this list of bugs to a
+hash. The keys are the bug ids, the values are also hashes with following 
+properties:
+* `opened_at`: DateTime - The moment the bug was opened
+* `closed`: Boolean - Whether the bug is currently closed
+* `type`: Symbol - `:feature_request`, `:bug` or `:task`.
+
+The bug object that the API returns does not contain information about when the
+bug was closed. So we need another way to figure this out. We do this by
+analysing the activity stream from Zoho Project. This activity stream can only
+be retrieved per project, so we need to map the activity to bugs ourselves.
+
+We loop over the activities (starting at the most recent activity). We only look
+at activities that indicate a status change of a bug that is currently closed
+and does not already have `closed_at` property. If we find such an activity we
+register the time as the activity in the `closed_at` property of the matching
+bug.
 

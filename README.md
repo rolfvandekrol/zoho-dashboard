@@ -107,5 +107,23 @@ We loop over the activities (starting at the most recent activity). We only look
 at activities that indicate a status change of a bug that is currently closed
 and does not already have `closed_at` property. If we find such an activity we
 register the time as the activity in the `closed_at` property of the matching
-bug.
+bug. After we have set this property we do not change it anymore. This means 
+that we assume that the latest status change of a closed bug is the moment is 
+was closed. 
+
+We are only interested in data for the previous x (in our case 10) weeks. We
+handle this by creating 10 objects that represent the past 10 full weeks. We
+call these objects time buckets. When we reach an activity that occured before 
+the start of the first week, we stop looping. We also stop looping when all the
+closed bugs in the list already have a `closed_at` property.
+
+After we have analyzed the actvities we loop over the bugs and push every bug
+in all of the time buckets. Each of the buckets knows it's own start and end
+time, so the buckets can determine whether the bug was **open** or **closed** at
+the end of the week, and whether the bug was **opened88 or 88closed88 during the
+week. For each of the possible values of the `type` property, the bucket keeps a
+counter for each of the states we listed.
+
+Finally this structure of projects, that contain buckets and the counters of
+these states per type is exported to JSON.
 
